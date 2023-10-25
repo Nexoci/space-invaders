@@ -20,3 +20,15 @@ class Player(pygame.sprite.Sprite):
             return True
         else:
             return False
+class Projectile(pygame.sprite.Sprite):
+    def __init__(self, x, y,speed=20):
+        super().__init__()
+        self.image = pygame.Surface((10, 10))
+        self.image.fill((255, 0, 0))  # Red color for the projectile
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.speed=speed
+    def update(self):
+        self.rect.y -= self.speed
+        if self.rect.bottom < 0:
+            self.kill()  # Remove the projectile when it goes off-screen
