@@ -45,9 +45,12 @@ window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 billy=Player(350,600,125,75,"images/billy.png",10)
 player_group.add(billy)
 spaceback=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/spacers.jpg")
-space_group.add(spaceback)
-btn_ext= imagebutton(225,200,250,250,"images/play.png","images/playclicked.png",next)
-start_btn.add(btn_ext)
+lifeleft= stillimage(50,740,600,50,"images/healthbar.png")
+space_group.add(spaceback,lifeleft)
+btn_ply= imagebutton(225,200,250,250,"images/play.png","images/playclicked.png",next)
+btn_ext= imagebutton(225,400,250,250,"images/exits.png","images/exitclicked.png",exit)
+btn_hlp= imagebutton(225,300,250,250,"images/help.png","images/helpclicked.png",next)
+start_btn.add(btn_ply,btn_ext,btn_hlp)
 startback=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/startback.jpg")
 start_group.add(startback)
 title= stillimage(125,0,500,250,"images/title.png")
@@ -60,6 +63,7 @@ def display():
     collision_group.draw(window)
     space_group.draw(window)
     player_group.draw(window)
+    #gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT)
     
 
 done=False
