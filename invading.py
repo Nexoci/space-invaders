@@ -3,11 +3,11 @@
 #Basic PyGame Setup Code
 import pygame,sys,time
 from player import Player
-from projectile import Projectile
+from player import Projectile
 from backround import backround
 from buttons import imagebutton
 from static import stillimage
-from Enemy import Evil
+from text import customtext
 
 
 pygame.init()
@@ -43,12 +43,9 @@ start_group = pygame.sprite.Group()
 starttext_group = pygame.sprite.Group()
 start_btn= pygame.sprite.Group()
 projectile_group = pygame.sprite.Group()
-evilguy_group = pygame.sprite.Group()
 window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
-billy=Player(350,650,125,75,"images/billy.png",10)
+billy=Player(350,600,125,75,"images/billy.png",10)
 player_group.add(billy)
-bullf =Evil(350,200,125,75,"images/billy.png",10)
-evilguy_group.add(bullf)
 bullet=Projectile(1000,1000)
 projectile_group.add(bullet)
 spaceback=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/spacers.jpg")
@@ -72,7 +69,6 @@ def display():
     space_group.draw(window)
     player_group.draw(window)
     projectile_group.draw(window)
-    evilguy_group.draw(window)
     #gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT)
     
 
@@ -96,7 +92,7 @@ while True:
     for event in pygame.event.get():
         pos = pygame.mouse.get_pos()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            new_projectile = Projectile(billy.rect.centerx+2, billy.rect.top+22)
+            new_projectile = Projectile(billy.rect.centerx, billy.rect.top)
             projectile_group.add(new_projectile)
       # if user  QUIT then the screen will close
         if event.type == pygame.QUIT:
