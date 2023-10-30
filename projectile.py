@@ -1,15 +1,16 @@
 import pygame,sys
 
 class Projectile(pygame.sprite.Sprite):
-    def __init__(self, x, y,speed=20):
+    def __init__(self,x,y,width,height,image_to_use,spee=10):
         super().__init__()
-        self.image = pygame.Surface((5, 15))
-        self.image.fill((120, 130, 122))
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
-        self.speed=speed
+        self.image = pygame.image.load(image_to_use)
+        self.image = pygame.transform.scale(self.image , (width, height)).convert_alpha() 
+        self.mask  = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect(topleft=(x,y))
+        self.spee= spee
+    def speed(self):
+        self.rect.y -= self.spee
     def update(self):
-        self.rect.y -= self.speed
         if self.rect.bottom < 0:
             self.kill()
     def check_hit(self,group):

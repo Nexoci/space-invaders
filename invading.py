@@ -3,11 +3,11 @@
 #Basic PyGame Setup Code
 import pygame,sys,time
 from player import Player
-from player import Projectile
+from projectile import Projectile
 from backround import backround
 from buttons import imagebutton
 from static import stillimage
-from text import customtext
+from Enemy import Evil
 
 
 pygame.init()
@@ -43,10 +43,13 @@ start_group = pygame.sprite.Group()
 starttext_group = pygame.sprite.Group()
 start_btn= pygame.sprite.Group()
 projectile_group = pygame.sprite.Group()
+alien_group = pygame.sprite.Group()
 window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 billy=Player(350,600,125,75,"images/billy.png",10)
 player_group.add(billy)
-bullet=Projectile(1000,1000)
+aliens=Evil(350,200,125,75,"images/billy.png",10)
+alien_group.add(aliens)
+bullet=Projectile(1000,1000,125,75,"images/bullet.png")
 projectile_group.add(bullet)
 spaceback=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/spacers.jpg")
 lifeleft= stillimage(50,740,600,50,"images/healthbar.png")
@@ -69,6 +72,7 @@ def display():
     space_group.draw(window)
     player_group.draw(window)
     projectile_group.draw(window)
+    alien_group.draw(window)
     #gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT)
     
 
@@ -92,7 +96,7 @@ while True:
     for event in pygame.event.get():
         pos = pygame.mouse.get_pos()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            new_projectile = Projectile(billy.rect.centerx, billy.rect.top)
+            new_projectile = Projectile(billy.rect.centerx, billy.rect.top,125,75,"images/bullet.png")
             projectile_group.add(new_projectile)
       # if user  QUIT then the screen will close
         if event.type == pygame.QUIT:
@@ -102,11 +106,14 @@ while True:
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             pos = pygame.mouse.get_pos()
             #If they click the reset button the game will reset
+    bullet.speed()
     billy.move()
     if billy.check_hit(collision_group):
         billy.back()
+    if aliens.check_hit(projectile_group):
+        aliens.kill()
         
     projectile_group.update()  # Update the projectiles
-
+    alien_group.update()
     pygame.display.update() #update the display
     fpsClock.tick(fps) #speed of redraw
