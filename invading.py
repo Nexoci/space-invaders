@@ -65,13 +65,15 @@ start_group.add(title)
 collidewalls=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/collide.png")
 collision_group.add(collidewalls)
 pygame.display.set_caption("Space Invaders")
-        
+def shot():
+    new_projectile = Projectile((billy.rect.x+33), (billy.rect.centery-40),60,32,"images/bullet.png")
+    projectile_group.add(new_projectile) 
 def display():
     window.fill((255,255,255))
     collision_group.draw(window)
     space_group.draw(window)
-    player_group.draw(window)
     projectile_group.draw(window)
+    player_group.draw(window)
     alien_group.draw(window)
     #gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT)
     
@@ -96,23 +98,17 @@ while True:
     for event in pygame.event.get():
         pos = pygame.mouse.get_pos()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            new_projectile = Projectile(billy.rect.centerx, billy.rect.top,125,75,"images/bullet.png")
-            projectile_group.add(new_projectile)
-      # if user  QUIT then the screen will close
+            shot()
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()    
         key_input = pygame.key.get_pressed()
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             pos = pygame.mouse.get_pos()
-            #If they click the reset button the game will reset
-    bullet.speed()
-    billy.move()
-    if billy.check_hit(collision_group):
-        billy.back()
     if aliens.check_hit(projectile_group):
         aliens.kill()
-        
+
+    billy.move()
     projectile_group.update()  # Update the projectiles
     alien_group.update()
     pygame.display.update() #update the display

@@ -16,7 +16,5 @@ class Player(pygame.sprite.Sprite):
         self.movex = (key_input[pygame.K_LEFT] * -self.speed) + (key_input[pygame.K_RIGHT] * self.speed)
         self.rect.x += self.movex
     def check_hit(self,group):
-        if pygame.sprite.spritecollide(self,group, False, collided=pygame.sprite.collide_mask):
-            return True
-        else:
-            return False
+        if pygame.sprite.spritecollide(self,group, True, collided=pygame.sprite.collide_mask):
+            pass
