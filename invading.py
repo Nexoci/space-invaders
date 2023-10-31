@@ -107,8 +107,13 @@ while True:
             pos = pygame.mouse.get_pos()
     if aliens.check_hit(projectile_group):
         aliens.kill()
+    if billy.check_hit(collision_group):
+        billy.back()
+    if aliens.check_hit(collision_group):
+        aliens.back()
 
     billy.move()
+    aliens.move()
     projectile_group.update()  # Update the projectiles
     alien_group.update()
     pygame.display.update() #update the display
