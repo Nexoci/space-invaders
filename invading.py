@@ -36,6 +36,7 @@ fps = 30
 fpsClock = pygame.time.Clock()
 WINDOW_WIDTH = 700
 WINDOW_HEIGHT = 800
+cooldown=fps/30
 player_group = pygame.sprite.Group()
 space_group = pygame.sprite.Group()
 collision_group = pygame.sprite.Group()
@@ -95,10 +96,13 @@ while not done:
 
 while True:
     display()
+    cooldown=cooldown-1
+    key_input = pygame.key.get_pressed()
     for event in pygame.event.get():
         pos = pygame.mouse.get_pos()
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+        if key_input[pygame.K_SPACE] and cooldown<0:
             shot()
+            cooldown=20
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()    
@@ -109,8 +113,8 @@ while True:
         aliens.kill()
     if billy.check_hit(collision_group):
         billy.back()
-    if aliens.check_hit(collision_group):
-        aliens.back()
+    if bullet.check_hit(collision_group):
+        bullet.kill()
 
     billy.move()
     aliens.move()

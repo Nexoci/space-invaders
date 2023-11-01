@@ -9,11 +9,12 @@ class Evil(pygame.sprite.Sprite):
         self.mask  = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect(topleft=(startX,startY))
         self.speed = speed
-        self.direction=True
+        self.direction=False
     def move(self):
-        self.rect.x += self.speed
-    def back(self):
-        self.rect.x -= self.speed
+        if self.direction:
+            self.rect.x-=self.speed
+        else:
+            self.rect.x += self.speed
     def check_hit(self,group):
         if pygame.sprite.spritecollide(self,group, False, collided=pygame.sprite.collide_mask):
             return True
