@@ -15,8 +15,10 @@ class Evil(pygame.sprite.Sprite):
             self.rect.x-=self.speed
         else:
             self.rect.x += self.speed
+            
     def check_hit(self,group):
         if pygame.sprite.spritecollide(self,group, False, collided=pygame.sprite.collide_mask):
+            self.direction=not self.direction
             return True
         else:
             return False

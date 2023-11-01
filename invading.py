@@ -10,6 +10,7 @@ from static import stillimage
 from Enemy import Evil
 
 
+
 pygame.init()
 def exit():
     pygame.quit()
@@ -48,7 +49,7 @@ alien_group = pygame.sprite.Group()
 window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 billy=Player(350,600,125,75,"images/billy.png",10)
 player_group.add(billy)
-aliens=Evil(350,200,125,75,"images/billy.png",10)
+aliens=Evil(350,200,125,100,"images/enemy.png",10)
 alien_group.add(aliens)
 bullet=Projectile(1000,1000,125,75,"images/bullet.png")
 projectile_group.add(bullet)
@@ -97,16 +98,16 @@ while not done:
 while True:
     display()
     cooldown=cooldown-1
-    key_input = pygame.key.get_pressed()
+    #key_input = pygame.key.get_pressed()
     for event in pygame.event.get():
         pos = pygame.mouse.get_pos()
-        if key_input[pygame.K_SPACE] and cooldown<0:
-            shot()
-            cooldown=20
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()    
-        key_input = pygame.key.get_pressed()
+    key_input = pygame.key.get_pressed()
+    if key_input[pygame.K_SPACE] and cooldown<0:
+        shot()
+        cooldown=20
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             pos = pygame.mouse.get_pos()
     if aliens.check_hit(projectile_group):
@@ -115,6 +116,8 @@ while True:
         billy.back()
     if bullet.check_hit(collision_group):
         bullet.kill()
+    if aliens.check_hit(collision_group):
+        aliens.move()
 
     billy.move()
     aliens.move()
