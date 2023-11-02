@@ -38,6 +38,7 @@ fpsClock = pygame.time.Clock()
 WINDOW_WIDTH = 700
 WINDOW_HEIGHT = 800
 cooldown=fps/30
+#Creating Groups
 player_group = pygame.sprite.Group()
 space_group = pygame.sprite.Group()
 collision_group = pygame.sprite.Group()
@@ -46,30 +47,27 @@ starttext_group = pygame.sprite.Group()
 start_btn= pygame.sprite.Group()
 projectile_group = pygame.sprite.Group()
 alien_group = pygame.sprite.Group()
+#creates window and custom objects
 window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 billy=Player(350,600,125,75,"images/billy.png",10)
-player_group.add(billy)
 aliens=Evil(350,200,125,100,"images/enemy.png",10)
-alien_group.add(aliens)
-bullet=Projectile(1000,1000,125,75,"images/bullet.png")
-projectile_group.add(bullet)
 spaceback=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/spacers.jpg")
 lifeleft= stillimage(50,740,600,50,"images/healthbar.png")
-space_group.add(spaceback,lifeleft)
 btn_ply= imagebutton(225,200,250,250,"images/play.png","images/playclicked.png",next)
 btn_ext= imagebutton(225,400,250,250,"images/exits.png","images/exitclicked.png",exit)
 btn_hlp= imagebutton(225,300,250,250,"images/help.png","images/helpclicked.png",next)
-start_btn.add(btn_ply,btn_ext,btn_hlp)
 startback=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/startback.jpg")
-start_group.add(startback)
-title= stillimage(125,0,500,250,"images/title.png")
-start_group.add(title)
 collidewalls=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/collide.png")
+title= stillimage(125,0,500,250,"images/title.png")
+player_group.add(billy)
+alien_group.add(aliens)
+space_group.add(spaceback,lifeleft)
+start_btn.add(btn_ply,btn_ext,btn_hlp)
+start_group.add(startback)
+start_group.add(title)
 collision_group.add(collidewalls)
 pygame.display.set_caption("Space Invaders")
-def shot():
-    new_projectile = Projectile((billy.rect.x+33), (billy.rect.centery-40),60,32,"images/bullet.png")
-    projectile_group.add(new_projectile) 
+
 def display():
     window.fill((255,255,255))
     collision_group.draw(window)
@@ -78,7 +76,6 @@ def display():
     player_group.draw(window)
     alien_group.draw(window)
     #gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT)
-    
 
 done=False
 while not done:
@@ -98,7 +95,6 @@ while not done:
 while True:
     display()
     cooldown=cooldown-1
-    #key_input = pygame.key.get_pressed()
     for event in pygame.event.get():
         pos = pygame.mouse.get_pos()
         if event.type == pygame.QUIT:
@@ -106,16 +102,17 @@ while True:
             sys.exit()    
     key_input = pygame.key.get_pressed()
     if key_input[pygame.K_SPACE] and cooldown<0:
-        shot()
+        bullet = Projectile((billy.rect.x+33), (billy.rect.centery-40),60,32,"images/bullet.png")
+        projectile_group.add(bullet) 
         cooldown=20
+        if bullet.check_hit(alien_group):
+            bullet.kill()
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             pos = pygame.mouse.get_pos()
     if aliens.check_hit(projectile_group):
         aliens.kill()
     if billy.check_hit(collision_group):
         billy.back()
-    if bullet.check_hit(collision_group):
-        bullet.kill()
     if aliens.check_hit(collision_group):
         aliens.move()
 

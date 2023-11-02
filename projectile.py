@@ -13,7 +13,5 @@ class Projectile(pygame.sprite.Sprite):
     def update(self):
         self.move()
     def check_hit(self,group):
-        if pygame.sprite.spritecollide(self,group, True, collided=pygame.sprite.collide_mask):
-            return True
-        else:
-            return False
+        if pygame.sprite.spritecollide(self,group, False, collided=pygame.sprite.collide_mask):
+            pass
