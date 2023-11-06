@@ -50,7 +50,19 @@ alien_group = pygame.sprite.Group()
 #creates window and custom objects
 window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 billy=Player(350,600,125,75,"images/billy.png",10)
-aliens=Evil(350,200,125,100,"images/enemy.png",10)
+alien1=Evil(350,200,125,100,"images/enemy.png",10)
+alien2=Evil(350,200,125,100,"images/enemy.png",10)
+alien3=Evil(350,200,125,100,"images/enemy.png",10)
+alien4=Evil(350,200,125,100,"images/enemy.png",10)
+alien5=Evil(350,200,125,100,"images/enemy.png",10)
+alien6=Evil(350,200,125,100,"images/enemy.png",10)
+alien7=Evil(350,200,125,100,"images/enemy.png",10)
+alien8=Evil(350,200,125,100,"images/enemy.png",10)
+alien9=Evil(350,200,125,100,"images/enemy.png",10)
+alien10=Evil(350,200,125,100,"images/enemy.png",10)
+alien11=Evil(350,200,125,100,"images/enemy.png",10)
+alien12=Evil(350,200,125,100,"images/enemy.png",10)
+alien13=Evil(350,200,125,100,"images/enemy.png",10)
 spaceback=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/spacers.jpg")
 lifeleft= stillimage(50,740,600,50,"images/healthbar.png")
 btn_ply= imagebutton(225,200,250,250,"images/play.png","images/playclicked.png",next)
@@ -60,7 +72,7 @@ startback=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/startback.jpg")
 collidewalls=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/collide.png")
 title= stillimage(125,0,500,250,"images/title.png")
 player_group.add(billy)
-alien_group.add(aliens)
+alien_group.add(alien1)
 space_group.add(spaceback,lifeleft)
 start_btn.add(btn_ply,btn_ext,btn_hlp)
 start_group.add(startback)
@@ -109,15 +121,15 @@ while True:
             bullet.kill()
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             pos = pygame.mouse.get_pos()
-    if aliens.check_hit(projectile_group):
-        aliens.kill()
+    if aliens1.check_hit(projectile_group):
+        aliens1.kill()
     if billy.check_hit(collision_group):
         billy.back()
-    if aliens.check_hit(collision_group):
-        aliens.move()
+    if aliens1.check_hit(collision_group):
+        aliens1.move()
 
     billy.move()
-    aliens.move()
+    aliens1.move()
     projectile_group.update()  # Update the projectiles
     alien_group.update()
     pygame.display.update() #update the display
