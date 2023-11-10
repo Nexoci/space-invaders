@@ -8,6 +8,7 @@ from backround import backround
 from buttons import imagebutton
 from static import stillimage
 from Enemy import Evil
+from blockers import Blockers
 
 
 
@@ -46,6 +47,7 @@ starttext_group = pygame.sprite.Group()
 start_btn= pygame.sprite.Group()
 projectile_group = pygame.sprite.Group()
 alien_group = pygame.sprite.Group()
+blocker_group = pygame.sprite.Group()
 #creates window and custom objects
 window = pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT), pygame.HWSURFACE)
 font = pygame.font.SysFont('Consolas', 30)
@@ -63,6 +65,7 @@ alien10=Evil(350,200,125,100,"images/enemy.png",10)
 alien11=Evil(350,200,125,100,"images/enemy.png",10)
 alien12=Evil(350,200,125,100,"images/enemy.png",10)
 alien13=Evil(350,200,125,100,"images/enemy.png",10)
+blocker1= Blockers(310,500,100,100,"blockers/good.png",1)
 spaceback=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/spacers.jpg")
 lifeleft= stillimage(50,740,600,50,"images/healthbar.png")
 help= stillimage(105,390,500,400,"images/help.png")
@@ -72,6 +75,7 @@ btn_ext= imagebutton(225,200,250,250,"images/exits.png","images/exitclicked.png"
 startback=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/startback.jpg")
 collidewalls=backround(WINDOW_WIDTH,WINDOW_HEIGHT,"images/collide.png")
 title= stillimage(125,0,500,250,"images/title.png")
+blocker_group.add(blocker1)
 player_group.add(billy)
 alien_group.add(alien1,alien2,alien3,alien4,alien5,alien6,alien7,alien8,alien9,alien10,alien11,alien12,alien13)
 space_group.add(spaceback,lifeleft)
@@ -87,6 +91,7 @@ def display():
     projectile_group.draw(window)
     player_group.draw(window)
     alien_group.draw(window)
+    blocker_group.draw(window)
     #gridHelp(window,WINDOW_WIDTH,WINDOW_HEIGHT)
 
 done=False
@@ -128,9 +133,20 @@ while True:
         billy.back()
     if alien1.check_hit(collision_group):
         alien1.move()
+    
+    pygame.sprite.groupcollide(projectile_group,blocker_group,True,True)
+    #if blocker1.check_hit(projectile_group):
+     #   for entity in blocker_group:
+      #      print(entity)
+        #blocker1.kill()
+       
+     #   %blocker1.damage()
+    #bullet.kill()
+        
     billy.move()
     alien1.move()
     projectile_group.update()  # Update the projectiles
     alien_group.update()
+    blocker_group.update()
     pygame.display.update() #update the display
     fpsClock.tick(fps) #speed of redraw
