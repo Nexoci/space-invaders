@@ -13,8 +13,10 @@ class Evil(pygame.sprite.Sprite):
     def move(self):
         if self.direction:
             self.rect.x-=self.speed
+            self.rect.y -= 10
         else:
             self.rect.x += self.speed 
+            self.rect.y =- 10
     def check_hit(self,group):
         if pygame.sprite.spritecollide(self,group, False, collided=pygame.sprite.collide_mask):
             self.direction=not self.direction
